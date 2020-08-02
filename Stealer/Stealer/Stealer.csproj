@@ -64,17 +64,20 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="modules\Bookmarks.cs" />
+    <Compile Include="modules\BrowserUtils.cs" />
+    <Compile Include="modules\Common.cs" />
     <Compile Include="modules\Cookies.cs" />
+    <Compile Include="modules\Autofill.cs" />
     <Compile Include="modules\CreditCards.cs" />
     <Compile Include="modules\Crypt.cs" />
     <Compile Include="modules\DPAPI.cs" />
     <Compile Include="modules\History.cs" />
     <Compile Include="modules\Passwords.cs" />
+    <Compile Include="modules\Paths.cs" />
     <Compile Include="modules\SimpleJSON.cs" />
     <Compile Include="modules\SQLite.cs" />
     <Compile Include="Program.cs" />

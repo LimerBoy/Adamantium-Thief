@@ -1,5 +1,5 @@
 # :unlock: Adamantium-Thief
-Get chromium browsers: passwords, credit cards, history, cookies, bookmarks.  
+Get chromium browsers: passwords, credit cards, history, cookies, bookmarks, autofill.  
 Chrome 80 > is supported!  
 
 # :herb: Examples:  
