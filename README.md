@@ -1,6 +1,7 @@
 # :unlock: Adamantium-Thief
-Get chromium browsers: passwords, credit cards, history, cookies, bookmarks, autofill.  
+Get **chromium** based browsers: passwords, credit cards, history, cookies, bookmarks, autofill.  
 Chrome 80 > is supported!  
+[Need firefox passwords decryptor?](https://github.com/LimerBoy/FireFox-Thief)
 
 # :herb: Examples:  
 
